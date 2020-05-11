@@ -1,0 +1,88 @@
+﻿@model Demo.Models.ItemViewModel
+
+@{
+    ViewData["Title"] = "Detail";
+    var isEdit = (bool)ViewData["isEdit"];
+}
+
+@if (isEdit == false)
+{
+    <h1>Detail</h1>
+} else
+{
+    <h1>Edit</h1>
+}
+
+
+<div>
+    <h4>Item</h4>
+    <hr />
+    @if (isEdit == false)
+    {
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Id)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Id)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Price)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Price)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+        </dl>
+    }
+    else
+    {
+<form asp-action="Edit" asp-controller="Item" method="post">
+    <div class="row mb-3">
+
+        <label class="col-sm-2">@Html.DisplayNameFor(model => model.Id)</label>
+        <input class="form-control col-sm-6" asp-for="Id" disabled />
+
+    </div>
+    <div class="row mb-3">
+
+        <label class="col-sm-2">@Html.DisplayNameFor(model => model.Name)</label>
+        <input class="form-control col-sm-6" asp-for="Name" />
+
+    </div>
+    <div class="row mb-3">
+
+        <label class="col-sm-2">@Html.DisplayNameFor(model => model.Price)</label>
+        <input class="form-control col-sm-6" asp-for="Price" />
+
+    </div>
+    <div class="row mb-3">
+
+        <label class="col-sm-2">@Html.DisplayNameFor(model => model.Description)</label>
+        <textarea class="form-control col-sm-6" asp-for="Description"></textarea>
+
+    </div>
+    <button class="btn btn-success" type="submit">Update</button>
+</form>
+        
+    }
+
+</div>
+<div>
+    @if (isEdit == false)
+    {
+        @Html.ActionLink("Edit", "EditView", "Item", new { id = Model.Id })
+    }
+    <a class="float-right" asp-action="Index">Back to List</a>
+</div>
