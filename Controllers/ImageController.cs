@@ -65,14 +65,14 @@ namespace Demo.Controllers
                 string fileName = unixTimestamp + "_" + file.FileName;
                 var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images", fileName);
                 var url = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}/api/Image/ViewImage/{fileName}";
-                bool result = imageService.Add(new Image(fileName, path), itemService.GetItem(id));
+                bool result = imageService.Add(new Image(fileName, path, url), itemService.GetItem(id));
                 if (result)
                 {
                     using (var bits = new FileStream(path, FileMode.Create))
                     {
                         await file.CopyToAsync(bits);
                     }
-                    return Ok(new { url });
+                    return Ok(new { Data = url });
                 }
                 return UnprocessableEntity();
             } catch (Exception e)

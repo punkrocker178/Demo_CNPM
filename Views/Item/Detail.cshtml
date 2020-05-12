@@ -8,7 +8,8 @@
 @if (isEdit == false)
 {
     <h1>Detail</h1>
-} else
+}
+else
 {
     <h1>Edit</h1>
 }
@@ -19,70 +20,94 @@
     <hr />
     @if (isEdit == false)
     {
-        <dl class="row">
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Id)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Id)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Name)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Name)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Price)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Price)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Description)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Description)
-            </dd>
-        </dl>
+<dl class="row">
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Id)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Id)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Name)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Name)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Price)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Price)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Description)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Description)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Category)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Category)
+    </dd>
+</dl>
+    <div class="row">
+        <h2>Images</h2>
+        <div class="row mb-5">
+            @foreach (var image in Model.Images)
+            {
+                @if (image.Url != null)
+                {
+                    <img src="@(image.Url)" class="img-fluid rounded col-4" />
+                }
+            }
+        </div>
+        
+    </div>
     }
     else
     {
 <form asp-action="Edit" asp-controller="Item" method="post">
     <div class="row mb-3">
-
         <label class="col-sm-2">@Html.DisplayNameFor(model => model.Id)</label>
-        <input class="form-control col-sm-6" asp-for="Id" disabled />
-
+        <input class="form-control col-sm-6" readonly asp-for="Id" />
     </div>
-    <div class="row mb-3">
 
+    <div class="row mb-3">
         <label class="col-sm-2">@Html.DisplayNameFor(model => model.Name)</label>
         <input class="form-control col-sm-6" asp-for="Name" />
-
     </div>
-    <div class="row mb-3">
 
+    <div class="row mb-3">
         <label class="col-sm-2">@Html.DisplayNameFor(model => model.Price)</label>
         <input class="form-control col-sm-6" asp-for="Price" />
-
     </div>
-    <div class="row mb-3">
 
+    <div class="row mb-3">
         <label class="col-sm-2">@Html.DisplayNameFor(model => model.Description)</label>
         <textarea class="form-control col-sm-6" asp-for="Description"></textarea>
-
     </div>
-    <button class="btn btn-success" type="submit">Update</button>
+
+    <div class="row mb-5">
+        <label class="col-sm-2">Category</label>
+        <select class="form-control col-sm-6" asp-items="@((SelectList)ViewData["Categories"])" asp-for="Category">Dropdown</select>
+    </div>
+    <div class="row">
+        <button class="btn btn-success col-1 mr-4" type="submit">Update</button>
+        @Html.ActionLink("Cancel", "Detail", "Item", new { id = Model.Id }, new { @class = "btn btn-dark col-1" })
+    </div>
+    
 </form>
-        
+
     }
 
 </div>
 <div>
     @if (isEdit == false)
     {
-        @Html.ActionLink("Edit", "EditView", "Item", new { id = Model.Id })
+        @Html.ActionLink("Edit", "EditView", "Item", new { id = Model.Id }, new { @class = "btn btn-primary float-left" })
+        <a class="float-right btn btn-secondary" asp-action="Index">Back to List</a>
+
     }
-    <a class="float-right" asp-action="Index">Back to List</a>
 </div>

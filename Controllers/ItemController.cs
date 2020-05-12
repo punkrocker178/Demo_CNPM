@@ -34,6 +34,7 @@ namespace Demo.Controllers
 
         public IActionResult CreateView()
         {
+            // Init category dropdown
             var categoryList = new List<SelectListItem>();
             foreach (Category category in categoryService.GetAll()) {
                 categoryList.Add(new SelectListItem
@@ -75,6 +76,18 @@ namespace Demo.Controllers
 
         public IActionResult EditView(int id)
         {
+            // Init category dropdown
+            var categoryList = new List<SelectListItem>();
+            foreach (Category category in categoryService.GetAll())
+            {
+                categoryList.Add(new SelectListItem
+                {
+                    Value = category.Id.ToString(),
+                    Text = category.Name
+                });
+            }
+            ViewData["Categories"] = new SelectList(categoryList, "Value", "Text");
+
             Item item = itemService.GetItem(id);
             ViewData["isEdit"] = true;
             if (item != null)
@@ -86,7 +99,26 @@ namespace Demo.Controllers
                 }
                 return View("Detail", viewModel);
             }
-            return View("Error", new { ErrorMessage = "Error fetching" });
+            ViewData["ErrorMessage"] = "Fetching Failed";
+            return View("Error");
+        }
+
+        public IActionResult Edit(ItemViewModel model)
+        {
+           if (itemService.Update(model))
+            {
+                ViewData["isEdit"] = false;
+                return RedirectToAction("Detail", new { id = model.Id});
+            }
+            ViewData["ErrorMessage"] = "Update Failed";
+            return View("Error");
+        }
+
+        public IActionResult Delete(int id)
+        {
+            Item item = itemService.GetItem(id);
+            itemService.DeleteItem(item);
+            return RedirectToAction("Index");
         }
     }
 }

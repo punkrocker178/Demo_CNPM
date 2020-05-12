@@ -70,16 +70,6 @@ namespace Demo.Data
         //    return db.Laptops.Where(laptop => laptop.CPU == cpu).ToList<Laptop>();
         //}
 
-        /*
-        public IEnumerable<Laptop> GetLaptopHasRamEqualOrGreaterThan(int ram)
-        {
-            var data = from laptop in db.Laptops
-                       where laptop.RAM >= ram
-                       select laptop;
-
-            return data;
-        }*/
-
         public int GetItemCount()
         {
             return (from item in store.Item
@@ -92,6 +82,26 @@ namespace Demo.Data
                 .Include(item => item.Category)
                 .Include(item => item.Image)
                 .FirstOrDefault(item => item.Id == id);
+        }
+
+        public bool Update(ItemViewModel viewModel)
+        {
+            try
+            {
+                Item item = store.Item.Find(viewModel.Id);
+                Category category = store.Category.Find(Int32.Parse(viewModel.Category));
+                item.Name = viewModel.Name;
+                item.Price = viewModel.Price;
+                item.Description = viewModel.Description;
+                item.Category = category;
+                store.SaveChanges();
+                return true;
+            } catch (Exception e)
+            {
+                return false;
+            }
+           
+
         }
 
         public IEnumerable<ItemViewModel> GetViewListModel()

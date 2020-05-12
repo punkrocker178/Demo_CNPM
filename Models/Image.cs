@@ -13,10 +13,13 @@ namespace Demo.Models
         public string Title { get; set; }
         public string Path { get; set; }
 
-        public Image(string title, string path)
+        public string Url { get; set; }
+
+        public Image(string title, string path, string url)
         {
             Title = title;
             Path = path;
+            Url = url;
         }
     }
 }
