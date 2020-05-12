@@ -32,6 +32,11 @@ namespace Demo.Controllers
             return View(itemService.GetViewListModel());
         }
 
+        public IActionResult Home()
+        {
+            return View("Home", itemService.GetViewListModel());
+        }
+
         public IActionResult CreateView()
         {
             // Init category dropdown

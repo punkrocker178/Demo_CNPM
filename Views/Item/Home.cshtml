@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Demo.Models.ItemViewModel>
+@{
+    ViewData["Title"] = "Home";
+}
+
+<h1>Home</h1>
+@if (Model != null)
+{
+<div class="row">
+    @foreach (var item in Model)
+    {
+    <div class="col-3 mr-2">
+        <div class="card">
+            @if (item.Images != null)
+            {
+                <img class="img-fluid" src="@(item.Images.ElementAt(0).Url)" />
+            }
+            <div class="card-header">
+                <h4>@(item.Name)</h4>
+            </div>
+            <div class="card-body">
+                <p class="text-truncate">@(item.Description)</p>
+                <a class="btn btn-primary" asp-action="Detail" asp-route-id="@item.Id">Detail</a>
+            </div>
+        </div>
+    </div>
+    }
+</div>
+}
+

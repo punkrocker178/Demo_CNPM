@@ -107,17 +107,19 @@ namespace Demo.Data
         public IEnumerable<ItemViewModel> GetViewListModel()
         {
             var list = new List<ItemViewModel>();
-            var items = store.Item.Include(items => items.Category);
+            var items = store.Item.Include(item => item.Category).Include(item => item.Image);
             foreach (Item item in items)
             {
+                ItemViewModel model = new ItemViewModel(item.Id, item.Name, item.Price, item.Description, null);
                 if (item.Category != null)
                 {
-                    list.Add(new ItemViewModel(item.Id, item.Name, item.Price, item.Description, item.Category.Name));
-                } else
-                {
-                    list.Add(new ItemViewModel(item.Id, item.Name, item.Price, item.Description, null));
+                    model.Category = item.Category.Name;
                 }
-             
+                if (item.Image != null)
+                {
+                    model.Images = item.Image;
+                }
+                list.Add(model);
                 
             }
             return list;
