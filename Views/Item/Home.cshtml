@@ -11,9 +11,13 @@
     {
     <div class="col-3 mr-2">
         <div class="card">
-            @if (item.Images != null)
+            @if (item.Images != null && item.Images.Count() > 0)
             {
-                <img class="img-fluid" src="@(item.Images.ElementAt(0).Url)" />
+                <img class="img-fluid-card card-img-top" src="@(item.Images.ElementAt(0).Url)" />
+            }
+            else
+            {
+                <img class="img-fluid-card card-img-top" src="~/images/default-image.jpg" />
             }
             <div class="card-header">
                 <h4>@(item.Name)</h4>

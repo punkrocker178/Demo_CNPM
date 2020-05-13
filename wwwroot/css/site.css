@@ -75,3 +75,9 @@ body {
     white-space: nowrap;
     max-width: 1px;
 }
+
+.img-fluid-card {
+    max-width: 100%;
+    object-fit: cover;
+    height: 12rem;
+}
